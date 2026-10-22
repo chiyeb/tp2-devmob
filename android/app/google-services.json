@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "510815805965",
+    "project_id": "tp2-miage",
+    "storage_bucket": "tp2-miage.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:510815805965:android:e643499dc887312060eb44",
+        "android_client_info": {
+          "package_name": "fr.miage.tp2_activites"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCx_tIkf-QHydzJjsdEwjE1_3jG6OQCyY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
