@@ -74,6 +74,10 @@ void main() {
 
     expect(find.byType(LoginView), findsOneWidget);
     expect(find.byType(HomeView), findsNothing);
+    expect(
+      find.text('Renseignez votre login et votre mot de passe.'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('mauvais identifiants : reste sur le login', (tester) async {
@@ -82,6 +86,32 @@ void main() {
 
     expect(find.byType(LoginView), findsOneWidget);
     expect(find.byType(HomeView), findsNothing);
+    expect(find.text('Login ou mot de passe incorrect.'), findsOneWidget);
+  });
+
+  testWidgets('saisie après une erreur : le message disparaît', (tester) async {
+    await pumpLogin(tester, UserRepository(service: service));
+    await submit(tester, login: 'alice', password: 'faux');
+    await tester.enterText(find.widgetWithText(TextField, 'Login'), 'alic');
+    await tester.pumpAndSettle();
+
+    expect(find.text('Login ou mot de passe incorrect.'), findsNothing);
+  });
+
+  testWidgets('bouton œil : affiche puis masque le mot de passe', (
+    tester,
+  ) async {
+    await pumpLogin(tester, UserRepository(service: service));
+    TextField password() =>
+        tester.widget<TextField>(find.widgetWithText(TextField, 'Password'));
+
+    await tester.tap(find.byTooltip('Afficher le mot de passe'));
+    await tester.pump();
+    expect(password().obscureText, isFalse);
+
+    await tester.tap(find.byTooltip('Masquer le mot de passe'));
+    await tester.pump();
+    expect(password().obscureText, isTrue);
   });
 
   testWidgets('erreur du repository : reste sur le login sans crash', (
@@ -92,6 +122,10 @@ void main() {
 
     expect(tester.takeException(), isNull);
     expect(find.byType(LoginView), findsOneWidget);
+    expect(
+      find.text('Connexion impossible. Vérifiez votre réseau et réessayez.'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('bons identifiants : affiche la page suivante', (tester) async {
