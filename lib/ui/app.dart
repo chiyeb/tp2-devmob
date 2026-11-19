@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../data/repositories/user_repository.dart';
+import 'core/themes/app_theme.dart';
 import 'features/auth/view_models/login_view_model.dart';
 import 'features/auth/views/login_view.dart';
 
@@ -33,9 +34,8 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Activités',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
-      ),
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
       home: LoginView(viewModel: _loginViewModel),
     );
   }
